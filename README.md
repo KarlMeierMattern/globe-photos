@@ -4,7 +4,7 @@
 
 This is an interactive Globe.gl app built with Next.js, Supabase, and React Hook Form.
 
-You can:
+App features:
 
 - Interactive globe navigation using your mouse or finger.
 - A built-in form for adding places you've visited and their corresponding photos.
