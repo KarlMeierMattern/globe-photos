@@ -22,6 +22,22 @@ export default function GlobeComponent() {
       const Globe = (await import("globe.gl")).default;
       if (!globeRef.current) return;
       const myGlobe = new Globe(globeRef.current);
+
+      // Dynamically import the local GeoJSON file
+      import("./ne_110m_admin_0_countries.json").then((data) => {
+        myGlobe
+          .polygonsData(
+            data.features.filter(
+              (d: { properties: { ISO_A2: string } }) =>
+                d.properties.ISO_A2 !== "AQ"
+            )
+          )
+          .polygonAltitude(0.06)
+          .polygonCapColor(() => "rgba(200, 200, 200, 0.3)")
+          .polygonSideColor(() => "rgba(0, 100, 0, 0.15)")
+          .polygonStrokeColor(() => "#111");
+      });
+
       myGlobe.labelColor((label) => (label as Label).labelColor || "orange");
       myGlobe.labelSize((label) => (label as Label).labelSize || 1);
       myGlobe.labelDotRadius((label) => (label as Label).labelDotRadius || 1);
