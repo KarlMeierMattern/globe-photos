@@ -23,21 +23,6 @@ export default function GlobeComponent() {
       if (!globeRef.current) return;
       const myGlobe = new Globe(globeRef.current);
 
-      // Dynamically import the local GeoJSON file
-      import("./ne_110m_admin_0_countries.json").then((data) => {
-        myGlobe
-          .polygonsData(
-            data.features.filter(
-              (d: { properties: { ISO_A2: string } }) =>
-                d.properties.ISO_A2 !== "AQ"
-            )
-          )
-          .polygonAltitude(0.06)
-          .polygonCapColor(() => "rgba(200, 200, 200, 0.3)")
-          .polygonSideColor(() => "rgba(0, 100, 0, 0.15)")
-          .polygonStrokeColor(() => "#111");
-      });
-
       myGlobe.labelColor((label) => (label as Label).labelColor || "orange");
       myGlobe.labelSize((label) => (label as Label).labelSize || 1);
       myGlobe.labelDotRadius((label) => (label as Label).labelDotRadius || 1);
@@ -48,6 +33,20 @@ export default function GlobeComponent() {
       myGlobe.backgroundImageUrl(
         "https://unpkg.com/three-globe/example/img/night-sky.png"
       );
+      // Dynamically import the local GeoJSON file
+      // import("./ne_110m_admin_0_countries.json").then((data) => {
+      //   myGlobe
+      //     .polygonsData(
+      //       data.features.filter(
+      //         (d: { properties: { ISO_A2: string } }) =>
+      //           d.properties.ISO_A2 !== "AQ"
+      //       )
+      //     )
+      //     .polygonAltitude(0.02)
+      //     .polygonCapColor(() => "rgba(200, 200, 200, 0.3)")
+      //     .polygonSideColor(() => "rgba(0, 100, 0, 0.15)")
+      //     .polygonStrokeColor(() => "#111");
+      // });
 
       // Fetch data from Supabase
       const fetchData = async () => {
